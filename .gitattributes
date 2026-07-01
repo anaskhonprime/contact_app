@@ -1,0 +1,10 @@
+# 플랫폼별 자동 생성 코드 - 언어 통계에서 제외
+/android/**   linguist-generated
+/ios/**       linguist-generated
+/linux/**     linguist-generated
+/macos/**     linguist-generated
+/windows/**   linguist-generated
+/web/**       linguist-generated
+
+# 빌드 산출물
+/build/**     linguist-generated
