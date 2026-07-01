@@ -1,17 +1,39 @@
-# contact_app
+# 📇 Contacts App
 
-A new Flutter project.
+A simple contacts app built while learning Flutter.  
+This is my first Flutter project, created to practice the basics of widgets, state management, and local data handling.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- Add, edit, and delete contacts
+- View contact details
+- Search through your contact list
+- Simple and clean UI
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠 Built With
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- [Flutter](https://flutter.dev/)
+- [Dart](https://dart.dev/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Flutter SDK installed ([installation guide](https://docs.flutter.dev/get-started/install))
+
+### Run locally
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+flutter pub get
+flutter run
+```
+
+## 📌 About
+
+This project was built as a learning exercise to get comfortable with Flutter fundamentals — layouts, navigation, and basic state management.
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
