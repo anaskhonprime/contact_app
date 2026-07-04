@@ -1,35 +1,65 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+  var a = 1;
+  var names = ['Kim', 'Park', 'Pizza'];
+  var like = [0,0,0];
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Seoul", style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.blue,
-          actions: [
-            Container(
-              width: 150,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.search, color: Colors.white),
-                  Icon(Icons.menu, color: Colors.white),
-                  Icon(Icons.notifications, color: Colors.white),
-                ],
-              ),
-            ),
-          ],
-        ),
-        body: Container(
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            setState(() {
+              a++;
+            });
+            print(a);
+          },
+          child: Text(a.toString()),
+          ),
+        appBar: AppBar(),
+        body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (c, i) {
+            return ListTile(
+              title: Text(names[i]),
+              leading: Text(like[i].toString()),
+              trailing: TextButton(onPressed: (){
+                return setState(() {
+                  like[i]++;
+                });
+              }, child: Text("Like")),
+            );
+          },
+          ),
+        bottomNavigationBar: BottomUI()
+      ),
+    );
+  }
+}
+
+
+class ShopItem extends StatelessWidget {
+  const ShopItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
           height: 200,
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(10),
@@ -75,8 +105,17 @@ class MyApp extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomAppBar(
+        );
+  }
+}
+
+
+class BottomUI extends StatelessWidget {
+  const BottomUI({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -85,8 +124,7 @@ class MyApp extends StatelessWidget {
               Icon(Icons.contact_page),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }
+
