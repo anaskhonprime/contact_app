@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp( MyApp());
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp()
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -17,42 +20,90 @@ class _MyAppState extends State<MyApp> {
   var names = ['Kim', 'Park', 'Pizza'];
   var like = [0,0,0];
 
+  inc(){
+    setState(() {
+      a++;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            setState(() {
-              a++;
+          onPressed: () {
+            showDialog(context: context, builder: (context){
+               return Dialog(
+                child: DialogUI(
+                  a : a,
+                  names : names,
+                  inc: inc
+                )
+               );
             });
-            print(a);
           },
-          child: Text(a.toString()),
-          ),
-        appBar: AppBar(),
+        ),
+        appBar: AppBar(title: Text(a.toString())),
         body: ListView.builder(
           itemCount: 3,
           itemBuilder: (c, i) {
             return ListTile(
               title: Text(names[i]),
-              leading: Text(like[i].toString()),
-              trailing: TextButton(onPressed: (){
-                return setState(() {
-                  like[i]++;
-                });
-              }, child: Text("Like")),
+              leading: Icon(Icons.account_box),
             );
           },
           ),
         bottomNavigationBar: BottomUI()
+      );
+  }
+}
+
+class DialogUI extends StatelessWidget {
+  const DialogUI({super.key, this.a, this.names, this.inc});
+  final a;
+  final names;
+  final inc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200, 
+      padding: EdgeInsets.all(20),
+      child: Column(
+       crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(a.toString(), style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700
+          )),
+          TextField(
+            decoration: InputDecoration(
+              labelText: "010-1234-1234",
+              border: UnderlineInputBorder(),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+            padding: EdgeInsets.all(10),
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(onPressed: (){}, 
+                child: Text("Cancel")),
+                TextButton(onPressed: (){
+                  inc();
+                }, 
+                child: Text("Okay")),
+              ],
+            ),
+          )
+        
+        ],
       ),
     );
   }
 }
-
 
 class ShopItem extends StatelessWidget {
   const ShopItem({super.key});
