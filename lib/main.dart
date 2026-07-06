@@ -26,6 +26,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  newContact(name){
+    setState(() {
+      names.add(name);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class _MyAppState extends State<MyApp> {
                 child: DialogUI(
                   a : a,
                   names : names,
-                  inc: inc
+                  newContact : newContact
                 )
                );
             });
@@ -45,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         ),
         appBar: AppBar(title: Text(a.toString())),
         body: ListView.builder(
-          itemCount: 3,
+          itemCount: names.length,
           itemBuilder: (c, i) {
             return ListTile(
               title: Text(names[i]),
@@ -59,10 +65,12 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DialogUI extends StatelessWidget {
-  const DialogUI({super.key, this.a, this.names, this.inc});
+  DialogUI({super.key, this.a, this.names, this.newContact});
   final a;
   final names;
-  final inc;
+  final newContact;
+
+  var inputData = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +85,9 @@ class DialogUI extends StatelessWidget {
             fontWeight: FontWeight.w700
           )),
           TextField(
+            controller: inputData,
             decoration: InputDecoration(
-              labelText: "010-1234-1234",
+              labelText: "name",
               border: UnderlineInputBorder(),
             ),
           ),
@@ -89,10 +98,14 @@ class DialogUI extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(onPressed: (){}, 
+                TextButton(onPressed: (){
+                  Navigator.of(context).pop();
+                }, 
                 child: Text("Cancel")),
                 TextButton(onPressed: (){
-                  inc();
+                  newContact(inputData.text);
+                  Navigator.of(context).pop();
+
                 }, 
                 child: Text("Okay")),
               ],
@@ -102,6 +115,26 @@ class DialogUI extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+
+
+class BottomUI extends StatelessWidget {
+  const BottomUI({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.phone),
+              Icon(Icons.message),
+              Icon(Icons.contact_page),
+            ],
+          ),
+        );
   }
 }
 
@@ -161,21 +194,4 @@ class ShopItem extends StatelessWidget {
 }
 
 
-class BottomUI extends StatelessWidget {
-  const BottomUI({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Icon(Icons.phone),
-              Icon(Icons.message),
-              Icon(Icons.contact_page),
-            ],
-          ),
-        );
-  }
-}
 
