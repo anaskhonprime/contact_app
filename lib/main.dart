@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -15,20 +16,46 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  dynamic getPermission() async{
+    var status = await Permission.contacts.status;
+    if(status.isGranted){
+      print("Granted");
+    } else if(status.isDenied){
+      print("Denied");
+      Permission.contacts.request();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
   
   var a = 1;
   var names = ['Kim', 'Park', 'Pizza'];
   var like = [0,0,0];
 
-  inc(){
+  dynamic inc(){
     setState(() {
       a++;
     });
   }
 
   newContact(name){
+   
+    if(name.trim().isEmpty){
+      return;
+    }
+
     setState(() {
       names.add(name);
+    });
+  }
+
+  deleteContact(name){
+    setState(() {
+      
     });
   }
 
@@ -49,13 +76,34 @@ class _MyAppState extends State<MyApp> {
             });
           },
         ),
-        appBar: AppBar(title: Text(a.toString())),
+        appBar: AppBar(title: Text("Contact"),
+        actions: [
+          IconButton(onPressed: (){
+            getPermission();
+          },
+              icon: Icon(Icons.add))
+        ],
+        ),
         body: ListView.builder(
           itemCount: names.length,
           itemBuilder: (c, i) {
             return ListTile(
               title: Text(names[i]),
               leading: Icon(Icons.account_box),
+              trailing: IconButton(
+                onPressed: (){
+                  setState(() {
+                    List<String> nName = [];
+                    for(var j = 0; j < names.length; j++){
+                      if(j != i){
+                        nName.add(names[j]);
+                      }
+                    }
+                    names = nName;
+                  });
+                }, 
+                icon: Icon(Icons.delete)
+              ),   
             );
           },
           ),
@@ -75,7 +123,7 @@ class DialogUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200, 
+      height: 300,
       padding: EdgeInsets.all(20),
       child: Column(
        crossAxisAlignment: CrossAxisAlignment.start,
