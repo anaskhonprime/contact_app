@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  newContact(name){
+  dynamic newContact(name){
    
     if(name.trim().isEmpty){
       return;
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  deleteContact(name){
+  dynamic deleteContact(name){
     setState(() {
       
     });
