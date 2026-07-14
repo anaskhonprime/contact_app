@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -21,6 +22,15 @@ class _MyAppState extends State<MyApp> {
     var status = await Permission.contacts.status;
     if(status.isGranted){
       print("Granted");
+
+      List<Contact> contacts = await FlutterContacts.getAll(
+        properties: {ContactProperty.photoThumbnail},
+      );
+      setState(() {
+        names = contacts;
+      });
+      print(contacts);
+
     } else if(status.isDenied){
       print("Denied");
       Permission.contacts.request();
@@ -33,7 +43,7 @@ class _MyAppState extends State<MyApp> {
   }
   
   var a = 1;
-  var names = ['Kim', 'Park', 'Pizza'];
+  var names = [];
   var like = [0,0,0];
 
   dynamic inc(){
@@ -88,7 +98,7 @@ class _MyAppState extends State<MyApp> {
           itemCount: names.length,
           itemBuilder: (c, i) {
             return ListTile(
-              title: Text(names[i]),
+              title: Text(names[i].displayName),
               leading: Icon(Icons.account_box),
               trailing: IconButton(
                 onPressed: (){
@@ -151,6 +161,7 @@ class DialogUI extends StatelessWidget {
                 }, 
                 child: Text("Cancel")),
                 TextButton(onPressed: (){
+
                   newContact(inputData.text);
                   Navigator.of(context).pop();
 
